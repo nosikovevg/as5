@@ -50,9 +50,9 @@
         mode: 0777
 
 
-    - name: Copy nginx config file for truruky
+    - name: Copy nginx config file for truruki
       copy:
-        src: files/truruki/turuki
+        src: files/truruki/truruki
         dest: /etc/nginx/sites-available/truruki
         mode: 0777
 
