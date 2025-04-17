@@ -24,7 +24,7 @@
 
     - name: Copy php vars_files
       copy:
-        src: files/truruky/tphp/index.php
+        src: files/truruki/tphp/index.php
         dest: /var/www/trur/index.php
         owner: root
         group: root
