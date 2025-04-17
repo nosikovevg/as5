@@ -38,6 +38,10 @@
         group: root
         mode: 0644
 
+    - name: Unconditionally reboot the machine with all defaults
+      ansible.builtin.reboot:
+  
+
     - name: Copy files from github
       git:
         repo: git@github.com:nosikovevg/tphp.git
