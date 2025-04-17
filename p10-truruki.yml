@@ -47,8 +47,6 @@
       copy:
         src: files/truruki/tphp/
         dest: /var/www/trur/
-        owner: neo
-        group: neo
         mode: 0777
 
 
@@ -56,8 +54,6 @@
       copy:
         src: files/truruki/turuki
         dest: /etc/nginx/sites-available/truruki
-        owner: neo
-        group: neo
         mode: 0777
 
 
