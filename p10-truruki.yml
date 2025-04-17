@@ -1,0 +1,67 @@
+---
+- name: copy files
+  become: yes
+  become_user: root
+  hosts: tr
+
+
+  vars_files:
+    - vars.yml
+
+
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+
+    - name: Create a directory if it does not exist
+      file:
+        path: /var/www/trur
+        state: directory
+        mode: 0777
+
+
+    - name: Copy php vars_files
+      copy:
+        src: files/truruki/tphp/index.php
+        dest: /var/www/trur/index.php
+        owner: root
+        group: root
+        mode: 0777
+    - name: Reload php8.3-fpm
+      service:
+        name: php8.3-fpm
+        state: restarted
+ 
+
+
+    - name: Copy php vars_files
+      copy:
+        src: files/truruki/tphp/
+        dest: /var/www/trur/
+        owner: neo
+        group: neo
+        mode: 0777
+
+
+    - name: Copy nginx config ile for truruky
+      copy:
+        src: files/truruki/turuki
+        dest: /etc/nginx/sites-available/truruki
+        owner: neo
+        group: neo
+        mode: 0777
+
+
+    - name: Link folder
+      file:
+        src: /etc/nginx/sites-available/truruki
+        dest: /etc/nginx/sites-enabled/truruki
+        state: link
+
+
+    - name: Reload nginx
+      service:
+        name: nginx
+        state: reloaded
