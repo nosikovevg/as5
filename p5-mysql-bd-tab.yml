@@ -1,0 +1,34 @@
+---
+- name: setup Mysql with demo_db and remote login
+  become: yes
+  hosts: tr
+
+  vars_files:
+    - vars.yml
+
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+    
+    - name: Copy SQL file
+      copy:
+        src: create_table.sql
+        dest: /tmp/create_table.sql
+        
+
+    - name: Import SQL file into database
+      mysql_db:
+        name: expo
+        state: import  #dump
+        target: /tmp/create_table.sql
+        login_user: root
+        login_password: "{{root_password}}"
+      notify:
+        - Restart mysql
+
+  handlers:
+    - name: Restart mysql
+      service:
+        name: mysql
+        state: restarted
