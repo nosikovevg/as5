@@ -10,7 +10,7 @@ index index.php;
 
      location ~* \.php$ {
        include snippets/fastcgi-php.conf;            
-       fastcgi_pass unix:/var/run/php/php8.3-fpm-tru.sock;
+       fastcgi_pass unix:/var/run/php/php8.1-fpm-tru.sock;
         }
    	location ~ /\.ht {
                deny all;

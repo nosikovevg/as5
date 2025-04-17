@@ -29,9 +29,16 @@
         owner: root
         group: root
         mode: 0777
-    - name: Reload php8.3-fpm
+
+    - name: Copy socket config php8.1-fpm-tru.sock
+      copy:
+        src: files/truruky/tru.conf
+        dest: /etc/php/8.1/fpm/pool.d/tru.conf
+
+
+    - name: Reload php8.1-fpm
       service:
-        name: php8.3-fpm
+        name: php8.1-fpm
         state: restarted
  
 
@@ -45,7 +52,7 @@
         mode: 0777
 
 
-    - name: Copy nginx config ile for truruky
+    - name: Copy nginx config file for truruky
       copy:
         src: files/truruki/turuki
         dest: /etc/nginx/sites-available/truruki
