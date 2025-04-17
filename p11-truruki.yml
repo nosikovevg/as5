@@ -30,11 +30,19 @@
         state: present
         update_cache: yes
 
+    - name: Copy key
+      copy:
+        src: /home/neo/.ssh/id_ed25519
+        dest: /root/www/.ssh/id_ed25519
+        owner: root
+        group: root
+        mode: 0644
+
     - name: Copy files from github
       git:
         repo: git@github.com:nosikovevg/tphp.git
         dest: /var/www/trur/
-        key_file: /home/neo/.ssh/id_ed25519
+        key_file: /root/www/.ssh/id_ed25519
         accept_hostkey: yes
         force: yes  
        
