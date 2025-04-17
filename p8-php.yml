@@ -1,0 +1,30 @@
+---
+- name: setup php
+  become: yes
+  hosts: tr
+
+  vars_files:
+    - vars.yml
+
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+    
+    - name: Installing php fpm and php-mysql
+      apt:
+        name: "{{item}}"
+        state: latest
+        update_cache: yes
+      loop:
+        - php-fpm
+        - php-mysql
+      become: yes
+
+    -  name: php version
+       shell: php -v
+       register: command_output
+
+    -  name: Display php version
+       debug:
+         var: command_output.stdout_lines
