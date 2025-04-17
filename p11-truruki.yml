@@ -33,7 +33,7 @@
     - name: Copy key
       copy:
         src: /home/neo/.ssh/id_ed25519
-        dest: /root/www/.ssh/id_ed25519
+        dest: /root/.ssh/id_ed25519
         owner: root
         group: root
         mode: 0644
