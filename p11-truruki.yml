@@ -36,7 +36,7 @@
         dest: /root/.ssh/id_ed25519
         owner: root
         group: root
-        mode: 0644
+        mode: 0600
 
     - name: Unconditionally reboot the machine with all defaults
       ansible.builtin.reboot:
