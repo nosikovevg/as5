@@ -24,6 +24,12 @@
         mode: 0777
 
 #---------------------------------------------------------2 
+    - name: Installing git
+      package:
+        name: git
+        state: present
+        update_cache: yes
+        
     - name: Copy files from github
       git:
         repo: git@github.com:nosikovevg/tphp.git
