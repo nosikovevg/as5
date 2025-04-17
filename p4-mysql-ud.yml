@@ -1,0 +1,25 @@
+---
+- name: MySQL
+  hosts: tr
+  become: yes
+
+  tasks:
+
+  - name: stop and disable
+    service:
+      name: mysql
+      state: stopped
+      enabled: no
+  
+
+  - name: Udalaem MySQL pakages
+    apt:
+      name:
+         - mysql-server
+         - mysql-client
+         - python3-mysqldb
+         - libmysqlclient-dev
+      state: absent
+      purge: yes
+      autoremove: yes
+    
