@@ -28,7 +28,7 @@
       git:
         repo: git@github.com:nosikovevg/tphp.git
         dest: /var/www/trur/
-        key_file: /home/neo/.ssh/id_ed25519
+        key_file: /home/neo/.ssh/id_ed25519_2
         accept_hostkey: yes
         force: yes  
        
