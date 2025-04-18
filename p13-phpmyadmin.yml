@@ -1,0 +1,62 @@
+---
+- name: copy files
+  become: yes
+  become_user: root
+  hosts: tr
+
+  vars_files:
+    - vars.yml
+
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+#--------------------------------------------------------- 
+   
+    - name: download  
+      get_url:
+        url: https://files.phpmyadmin.net/phpMyAdmin/5.2.2/phpMyAdmin-5.2.2-all-languages.zip
+        dest: /tmp/
+        mode: 0755
+
+#---------------------------------------------------------
+
+    - name: Unarchive a file that is already on the remote machine
+      ansible.builtin.unarchive:
+        src: /tmp/phpMyAdmin-5.2.2-all-languages.zip
+        dest: /tmp
+        remote_src: yes
+
+
+#---------------------------------------------------------      
+
+    - name: Create a directory if it does not exist
+      file:
+        path: /var/www/default/phpmyadmin
+        state: directory
+        mode: 0777
+#---------------------------------------------------------
+
+    - name: Copy files phpmyadmin
+      copy:
+        src: /tmp/phpMyAdmin-5.2.2-all-languages/.
+        dest: /var/www/default/phpmyadmin
+        remote_src: yes
+#---------------------------------------------------------
+
+    - name: Copy config from sample
+      copy:
+        src: /var/www/default/phpmyadmin/config.sample.inc.php
+        dest: /var/www/default/phpmyadmin/config.inc.php
+        remote_src: yes
+
+#---------------------------------------------------------      
+
+    - name: Change owner
+      file:
+        path: /var/www/default/phpmyadmin
+        owner: www-data
+        group: www-data
+        recurse: yes
+
