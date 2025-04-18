@@ -61,5 +61,15 @@
         regexp: "\\$cfg\\['blowfish_secret'\\] = '';"
         line: $cfg['blowfish_secret'] = '12345678910';
 
-    - name: Unconditionally reboot the machine with all defaults
-      ansible.builtin.reboot:
+    - name: Copy nginx config file
+      copy:
+        src: files/default2.conf
+        dest: /etc/nginx/sites-available/default
+        owner: root
+        group: root
+        mode: 0777
+
+    - name: Reload nginx
+      service:
+        name: nginx
+        state: reloaded
