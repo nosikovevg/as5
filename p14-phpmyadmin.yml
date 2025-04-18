@@ -50,7 +50,7 @@
 #---------------------------------------------------------      
     - name: Change owner
       file:
-        path: /var/www/html/phpmyadmin
+        path: /var/www/html/
         owner: www-data
         group: www-data
         recurse: yes
