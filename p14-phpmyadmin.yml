@@ -59,4 +59,4 @@
       lineinfile:
         path: /var/www/html/phpmyadmin/config.inc.php
         regexp: ^\$cfg['blowfish_secret'] = '';
-        line: $cfg['blowfish_secret'] = '1234567';
+        line: $cfg['blowfish_secret'] = '12345678';
