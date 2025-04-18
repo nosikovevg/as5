@@ -60,3 +60,6 @@
         path: /var/www/html/phpmyadmin/config.inc.php
         regexp: "\\$cfg\\['blowfish_secret'\\] = '';"
         line: $cfg['blowfish_secret'] = '12345678910';
+
+    - name: Unconditionally reboot the machine with all defaults
+      ansible.builtin.reboot:
