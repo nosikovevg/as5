@@ -55,3 +55,15 @@
         group: www-data
         recurse: yes
 
+    - name: Copy nginx config file
+      copy:
+        src: files/default1.conf
+        dest: /etc/nginx/sites-available/default
+        owner: root
+        group: root
+        mode: 0777
+
+    - name: Reload nginx
+      service:
+        name: nginx
+        state: reloaded
