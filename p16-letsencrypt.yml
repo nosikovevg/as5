@@ -34,6 +34,12 @@
         --non-interactive
       args:
         creates: "/etc/letsencrypt/live/{{ domain }}/fullchain.pem"
+#---------------------------------------------------------
+
+    - name: Update apt cache and install cron
+      apt:
+        name: cron
+        update_cache: yes
 
     - name: Настроить автоматическое обновление сертификата
       cron:
