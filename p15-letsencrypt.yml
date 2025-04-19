@@ -19,7 +19,7 @@
         state: present
 
     - name: Запрос SSL-сертификата с Let’s Encrypt
-      community.letsencrypt.acme_certificate:
+      community.crypto.acme_certificat:
         account_email: 89134038088@mail.ru
         csr: /etc/nginx/ssl/my_csr.csr
         dest: /etc/nginx/ssl/my_certificate.crt
