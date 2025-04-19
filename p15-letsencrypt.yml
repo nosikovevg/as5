@@ -1,0 +1,33 @@
+---
+- name: Установка SSL-сертификата с Let’s Encrypt
+  become: yes
+  become_user: root
+  hosts: tr
+
+  vars_files:
+    - vars.yml
+
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+        
+    
+    - name: Установка Certbot (клиент Let’s Encrypt)
+      apt:
+        name: certbot
+        state: present
+
+    - name: Запрос SSL-сертификата с Let’s Encrypt
+      community.letsencrypt.acme_certificate:
+        account_email: 89134038088@mail.ru
+        csr: /etc/nginx/ssl/my_csr.csr
+        dest: /etc/nginx/ssl/my_certificate.crt
+        terms_agreed: yes
+        state: present
+        domain: truruki.ru
+
+    - name: Перезагрузка Nginx после установки сертификата
+      service:
+        name: nginx
+        state: restarted
