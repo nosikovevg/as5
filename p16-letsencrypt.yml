@@ -1,0 +1,44 @@
+---
+- name: Test connection my server
+  become: yes
+  become_user: root
+  hosts: tr
+
+  vars_files:
+    - vars.yml
+  vars:
+    domain: "truruki.ru"
+    email: "89134038088@mail.ru"
+    webroot_path: "/var/www/trur"  # путь к корню сайта
+
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Установить certbot и плагин для nginx (или apache, если используете apache)
+      apt:
+        name:
+          - certbot
+          - python3-certbot-nginx  # или python3-certbot-apache
+        state: present
+        update_cache: yes
+
+    - name: Получить сертификат для {{ domain }} через webroot
+      command: >
+        certbot certonly --webroot
+        --webroot-path {{ webroot_path }}
+        --domain {{ domain }}
+        --agree-tos
+        --email {{ email }}
+        --non-interactive
+      args:
+        creates: "/etc/letsencrypt/live/{{ domain }}/fullchain.pem"
+
+    - name: Настроить автоматическое обновление сертификата
+      cron:
+        name: "Renew Let's Encrypt certificates"
+        job: "certbot renew --quiet --renew-hook 'systemctl reload nginx'"
+        minute: "0"
+        hour: "3"
+
