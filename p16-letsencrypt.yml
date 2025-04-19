@@ -47,4 +47,15 @@
         job: "certbot renew --quiet --renew-hook 'systemctl reload nginx'"
         minute: "0"
         hour: "3"
+#---------------------------------------------------------
+    - name: Insert/Update configuration using a local file
+      ansible.builtin.blockinfile:
+        path: /etc/nginx/sites-available/truruki
+        block: "{{ lookup('ansible.builtin.file', './files/truruki/new_frag') }}"
+        marker: "## {mark} ANSIBLE MANAGED BLOCK"
+
+    - name: Reload nginx
+      service:
+        name: nginx
+        state: reloaded
 
